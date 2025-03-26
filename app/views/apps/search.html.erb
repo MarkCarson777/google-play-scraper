@@ -1,0 +1,28 @@
+<div>
+    <h1>Search Google Play App</h1>
+    <!-- Search Form -->
+    <%= form_with url: apps_results_path, method: :post, local: true do %>
+      <div>
+        <%= text_field_tag :app_id, params[:app_id], placeholder: "Enter app ID (e.g., com.google.android.apps.translate)" %>
+        <%= submit_tag "Search" %>
+      </div>
+    <% end %>
+
+    <!-- Error Message -->
+    <% if flash[:error] %>
+      <p><%= flash[:error] %></p>
+    <% end %>
+
+    <!-- Results Display -->
+    <% if @app_data %>
+      <div>
+        <!-- Show raw @app_data -->
+        <p>Raw data: <%= @app_data.inspect %></p>
+          <h2><%= @app_data.dig(:title) || @app_data.dig('title') || 'No title' %></h2>
+          <p><strong>Developer:</strong> <%= @app_data.dig(:developer) || @app_data.dig('developer') || 'Not available' %></p>
+          <p><strong>Rating:</strong> <%= @app_data.dig(:rating) || @app_data.dig('rating') || 'Not available' %> stars</p>
+          <p><strong>Review Count:</strong> <%= @app_data.dig(:review_count) || @app_data.dig('review_count') || 'Not available' %></p>
+          <p><strong>Description:</strong> <%= @app_data.dig(:description) || @app_data.dig('description') || 'Not available' %></p>
+      </div>
+    <% end %>
+  </div>
